@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bridie Maugham Dibora — Enhanced HTML5 Form</title>
+  <meta name="description" content="Portfolio contact + demo form by Bridie Maugham Dibora. Example page demonstrating lists, tables, media, and an advanced HTML5 form with validation." />
+
+  <style>
+    :root{
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #6b6b6b;
+      --accent: #234ecf; /* royal blue */
+      --grey: #f3f4f6;
+      --max-width: 900px;
+      --radius: 10px;
+      --shadow: 0 6px 16px rgba(0,0,0,0.08);
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#fafafa 0%, var(--bg) 60%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      padding:32px 16px;
+      display:flex;
+      justify-content:center;
+      font-size:16px;
+    }
+
+    .page{
+      width:100%;
+      max-width:var(--max-width);
+      background:var(--bg);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:28px;
+      box-sizing:border-box;
+    }
+
+    header{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .brand-mark{
+      width:64px;
+      height:64px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--text),var(--accent));
+      border-radius:12px;
+      color:white;
+      font-weight:700;
+      font-size:18px;
+      box-shadow:0 6px 12px rgba(35,78,207,0.15);
+    }
+
+    h1{margin:0;font-size:1.25rem;}
+    p.lead{margin:6px 0 0;color:var(--muted);font-size:0.95rem;}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:22px;
+      margin-top:20px;
+    }
+
+    @media (max-width:980px){
+      .grid{grid-template-columns:1fr;}
+    }
+
+    /* Left column content */
+    .card{
+      background: linear-gradient(180deg,#fff,#fbfdff);
+      border-radius:10px;
+      padding:18px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.04);
+      border:1px solid #eef2ff;
+    }
+
+    h2{margin:0 0 10px 0;color:var(--accent);font-size:1.05rem}
+    section p{margin:8px 0 12px 0;color:var(--muted)}
+
+    /* Lists and table */
+    ul.clean{padding-left:18px;margin:0 0 12px 0}
+    ul.clean li{margin:6px 0}
+    ol.steps{padding-left:18px;color:var(--muted);}
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+      font-size:0.95rem;
+    }
+    th,td{
+      padding:8px 10px;
+      text-align:left;
+      border-bottom:1px solid #eef2ff;
+    }
+    th{background:linear-gradient(90deg, rgba(35,78,207,0.06), rgba(35,78,207,0.03));color:var(--accent);}
+
+    /* media */
+    figure{margin:0 0 12px 0}
+    img.responsive{max-width:100%;height:auto;border-radius:8px;border:1px solid #edf2ff}
+
+    /* Right column / aside */
+    aside .meta{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-bottom:12px;
+    }
+    .meta small{display:block;color:var(--muted);font-size:0.85rem}
+
+    /* Form styling */
+    form{margin-top:6px}
+    fieldset{
+      border:1px solid #e8eefb;
+      padding:12px 14px;
+      border-radius:8px;
+      margin-bottom:14px;
+    }
+    legend{padding:0 6px;color:var(--accent);font-weight:700}
+    .form-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .field{
+      flex:1 1 200px;
+      min-width:180px;
+      display:flex;
+      flex-direction:column;
+      margin-bottom:8px;
+    }
+    label{font-weight:600;font-size:0.92rem;margin-bottom:6px}
+    input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="number"], textarea, select, input[type="date"], input[type="time"], input[type="datetime-local"]{
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid #dfe8ff;
+      background:#fff;
+      outline-color: rgba(35,78,207,0.34);
+    }
+    textarea{min-height:120px;resize:vertical}
+    .small{font-size:0.85rem;color:var(--muted);margin-top:6px}
+    .actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      margin-top:8px;
+    }
+    button{
+      padding:10px 14px;
+      border-radius:8px;
+      border:0;
+      cursor:pointer;
+      font-weight:700;
+    }
+    button.primary{background:var(--accent);color:white}
+    button.ghost{background:#fff;border:1px solid #dfe8ff;color:var(--accent)}
+    .note{font-size:0.88rem;color:var(--muted);margin-top:8px}
+
+    /* accessible focus */
+    input:focus, textarea:focus, select:focus { box-shadow: 0 0 0 4px rgba(35,78,207,0.08); }
+
+    /* small UI bits */
+    .skills-grid{display:grid;grid-template-columns:1fr 1fr; gap:10px}
+    .skill{display:flex;flex-direction:column}
+    meter{width:100%;height:14px;border-radius:6px}
+
+    footer{margin-top:18px;font-size:0.85rem;color:var(--muted);text-align:center}
+  </style>
+</head>
+<body>
+  <main class="page" role="main">
+    <header>
+      <div class="brand-mark" aria-hidden="true">BM</div>
+      <div>
+        <h1>Bridie Maugham Dibora — Enhanced HTML5 Form</h1>
+        <p class="lead">A demonstration page using lists, tables, media and a complete HTML5 form with native validation.</p>
+      </div>
+    </header>
+
+    <div class="grid" role="region" aria-label="Main content">
+      <!-- LEFT COLUMN: content + form -->
+      <div class="card" aria-live="polite">
+        <section aria-labelledby="intro">
+          <h2 id="intro">Overview</h2>
+          <p>I build accessible, thoughtful web experiences that prioritize clarity and user needs. This page shows semantic HTML5 content and a robust form you can reuse in projects.</p>
+
+          <h3>What you'll find</h3>
+          <ul class="clean" aria-label="page features">
+            <li>Semantic sections and headings</li>
+            <li>Lists to organize information</li>
+            <li>Tables showing structured data</li>
+            <li>Embedded media (image, audio, video)</li>
+            <li>A complete, validated HTML5 form</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="skills">
+          <h2 id="skills">Skills & Tools</h2>
+          <div class="skills-grid" role="list">
+            <div class="skill" role="listitem">
+              <strong>HTML5</strong>
+              <meter min="0" max="100" value="95">95%</meter>
+            </div>
+            <div class="skill" role="listitem">
+              <strong>Accessibility</strong>
+              <meter min="0" max="100" value="90">90%</meter>
+            </div>
+            <div class="skill" role="listitem">
+              <strong>SEO & Content</strong>
+              <meter min="0" max="100" value="88">88%</meter>
+            </div>
+            <div class="skill" role="listitem">
+              <strong>Design & Branding</strong>
+              <meter min="0" max="100" value="85">85%</meter>
+            </div>
+          </div>
+
+          <h3 style="margin-top:12px">Typical stack</h3>
+          <ol class="steps">
+            <li>Semantic HTML & CSS (mobile-first)</li>
+            <li>Accessible interactions (ARIA where needed)</li>
+            <li>Content-first design & SEO basics</li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="media">
+          <h2 id="media">Media Examples</h2>
+
+          <figure>
+            <!-- replace src with your real image if available -->
+            <img class="responsive" src="https://via.placeholder.com/800x420.png?text=Portfolio+Hero+Image" alt="Bridie portfolio hero shot" width="800" height="420">
+            <figcaption class="small">Hero image — visual introduction (example placeholder).</figcaption>
+          </figure>
+
+          <figure>
+            <figcaption class="small">Embedded audio: short intro (example)</figcaption>
+            <audio controls preload="none">
+              <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </figure>
+
+          <figure>
+            <figcaption class="small">Embedded video: demo (muted placeholder)</figcaption>
+            <video controls width="100%" height="auto" preload="metadata">
+              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </figure>
+        </section>
+
+        <section aria-labelledby="projects">
+          <h2 id="projects">Selected Projects (table)</h2>
+          <p class="small">A simple table to show project metadata and status.</p>
+
+          <table aria-describedby="projects-desc">
+            <caption id="projects-desc" style="caption-side:top;text-align:left;font-weight:700;margin-bottom:6px">Projects summary</caption>
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Role</th>
+                <th>Technology</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Accessible Portfolio</td>
+                <td>Lead Developer</td>
+                <td>HTML5, CSS</td>
+                <td>Completed</td>
+              </tr>
+              <tr>
+                <td>UGC Campaign Toolkit</td>
+                <td>Consultant</td>
+                <td>Content Strategy</td>
+                <td>Live</td>
+              </tr>
+              <tr>
+                <td>Brand Site Rebuild</td>
+                <td>Front-end</td>
+                <td>HTML5, CSS, CI</td>
+                <td>In Progress</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- FORM: complete and validated -->
+        <section aria-labelledby="contact-form">
+          <h2 id="contact-form">Contact & Briefing Form</h2>
+          <p class="small">Use this form to request a collaboration, share a brief, or send feedback. I use native HTML5 validation — no JavaScript required.</p>
+
+          <form action="#" method="post" autocomplete="on" novalidate>
+            <!-- identify submission with a read-only ID (example) -->
+            <fieldset>
+              <legend>Basic details</legend>
+              <div class="form-row">
+                <div class="field">
+                  <label for="proj-name">Project name</label>
+                  <input id="proj-name" name="project_name" type="text" placeholder="Short project title" minlength="3" maxlength="80" required autocomplete="organization">
+                  <span class="small">Give the project a clear title (3–80 characters).</span>
+                </div>
+
+                <div class="field">
+                  <label for="client-email">Contact email</label>
+                  <input id="client-email" name="client_email" type="email" placeholder="name@brand.com" required autocomplete="email">
+                  <span class="small">I will reply to this address — use a business email if possible.</span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="field">
+                  <label for="client-phone">Phone / WhatsApp</label>
+                  <input id="client-phone" name="client_phone" type="tel" placeholder="+2547XXXXXXXX" pattern="^\+?[0-9\s\-]{7,20}$" autocomplete="tel">
+                  <span class="small">International format recommended. Pattern accepts digits, +, spaces, and dashes.</span>
+                </div>
+
+                <div class="field">
+                  <label for="budget">Estimated budget (KES)</label>
+                  <input id="budget" name="budget" type="number" placeholder="e.g., 25000" min="0" step="100" autocomplete="off">
+                  <span class="small">Optional — write an approximate budget to help scope deliverables.</span>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Deliverables & timeline</legend>
+
+              <div class="field">
+                <label for="deliverables">Requested deliverables</label>
+                <select id="deliverables" name="deliverables" required>
+                  <option value="">— select package —</option>
+                  <option value="tiktok_video">TikTok video (1)</option>
+                  <option value="ig_reel">Instagram Reel (1)</option>
+                  <option value="crosspost_video">Cross-post video (IG + TikTok)</option>
+                  <option value="stories">Stories (4–6)</option>
+                  <option value="bundle">Bundle (video + stories)</option>
+                  <option value="ugc">UGC assets (unposted)</option>
+                </select>
+                <span class="small">Choose the main deliverable — select <em>Bundle</em> for combined packages.</span>
+              </div>
+
+              <div class="form-row">
+                <div class="field">
+                  <label for="deadline">Requested delivery date</label>
+                  <input id="deadline" name="deadline" type="date" required>
+                  <span class="small">Pick a realistic date. I typically need 5–7 business days for single deliverables.</span>
+                </div>
+
+                <div class="field">
+                  <label for="time-preference">Time of day for posting (optional)</label>
+                  <input id="time-preference" name="time_preference" type="time" autocomplete="off">
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Creative brief</legend>
+
+              <div class="field">
+                <label for="audience">Target audience (short)</label>
+                <input id="audience" name="audience" type="text" placeholder="e.g., women 18–34, skincare-interested" required>
+              </div>
+
+              <div class="field">
+                <label for="key-message">Key message</label>
+                <input id="key-message" name="key_message" type="text" placeholder="What must the audience remember?" maxlength="120" required>
+                <span class="small">Keep it short — strong messages perform best.</span>
+              </div>
+
+              <div class="field">
+                <label for="notes">Notes / brand guidelines (paste)</label>
+                <textarea id="notes" name="notes" placeholder="Colour palette, logo usage, required hashtags, disclaimers..." maxlength="1200" aria-describedby="notes-help"></textarea>
+                <small id="notes-help" class="small">If you have a PDF or brand doc, upload it in the attachments section below.</small>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Permissions & attachments</legend>
+
+              <div class="field">
+                <label for="assets">Upload brand assets</label>
+                <input id="assets" name="assets[]" type="file" accept=".jpg,.png,.svg,.pdf" multiple>
+                <span class="small">Allow multiple files — logos, mockups, or briefs (jpg, png, svg, pdf).</span>
+              </div>
+
+              <div class="form-row" style="align-items:center">
+                <div class="field" style="flex:0 0 220px">
+                  <label for="usage">Usage required</label>
+                  <select id="usage" name="usage" required>
+                    <option value="">Select usage</option>
+                    <option value="organic">Organic (no paid ads)</option>
+                    <option value="ads">Paid ads (social media ads)</option>
+                    <option value="both">Both organic & ads</option>
+                  </select>
+                </div>
+
+                <div class="field" style="flex:1 1 140px">
+                  <label for="exclusivity">Exclusivity</label>
+                  <select id="exclusivity" name="exclusivity" required>
+                    <option value="">Select</option>
+                    <option value="none">No exclusivity</option>
+                    <option value="category">Category exclusivity</option>
+                    <option value="full">Full exclusivity</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Legal & consent</legend>
+
+              <div class="field">
+                <label>I confirm the following</label>
+                <div style="display:flex;gap:12px;flex-wrap:wrap">
+                  <label><input type="checkbox" name="terms" required> I confirm I have permission to share the assets.</label>
+                  <label><input type="checkbox" name="age" required> The product is not age-restricted.</label>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="disclaimer">Disclosure text (readonly)</label>
+                <input id="disclaimer" name="disclaimer" type="text" value="Paid partnership — terms to be confirmed" readonly>
+                <span class="small">I will use a disclosure like the example above when posting paid content.</span>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Extras (optional)</legend>
+
+              <div class="field">
+                <label for="mood">Colour mood (choose)</label>
+                <input id="mood" name="mood" type="color" value="#234ecf" aria-label="Preferred colour mood">
+              </div>
+
+              <div class="form-row">
+                <div class="field">
+                  <label for="audience-size">Approx. audience size (for rate reference)</label>
+                  <input id="audience-size" name="audience_size" type="number" placeholder="e.g., 50,000" min="0" step="1">
+                  <span class="small">Optional — helps set realistic pricing and reach goals.</span>
+                </div>
+
+                <div class="field">
+                  <label for="priority">Project priority</label>
+                  <select id="priority" name="priority">
+                    <option value="normal">Normal</option>
+                    <option value="rush">Rush (+25% fee)</option>
+                    <option value="flex">Flexible</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="actions">
+              <button type="reset" class="ghost" aria-label="Reset form">Reset</button>
+              <button type="submit" class="primary" aria-label="Submit form">Send brief</button>
+            </div>
+
+            <p class="note">Note: This demo uses native HTML5 validation. Required fields, patterns, min/max and readonly constraints will be enforced by the browser.</p>
+          </form>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN: quick contact + summary -->
+      <aside class="card" aria-labelledby="contact-info">
+        <div class="meta">
+          <div style="width:56px;height:56px;border-radius:8px;background:#111;color:#fff;display:grid;place-items:center;font-weight:700">BM</div>
+          <div>
+            <strong>Bridie Maugham Dibora</strong>
+            <small>Web & Content Designer • Nairobi</small>
+          </div>
+        </div>
+
+        <section aria-labelledby="contact-info">
+          <h2 id="contact-info">Quick contact</h2>
+          <p class="small">Email: <a href="mailto:maughamdiborapr@gmail.com">maughamdiborapr@gmail.com</a><br>Phone: <a href="tel:+254701170131">+254 701 170 131</a></p>
+
+          <h3 style="margin-top:12px">Services I offer</h3>
+          <ul class="clean">
+            <li>Website accessibility & HTML5</li>
+            <li>Content strategy & UGC</li>
+            <li>Social media campaigns</li>
+            <li>Rate card & influencer collaboration</li>
+          </ul>
+
+          <h3 style="margin-top:12px">Availability</h3>
+          <table>
+            <thead>
+              <tr><th>Day</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Mon–Thu</td><td>Available</td></tr>
+              <tr><td>Fri</td><td>Limited</td></tr>
+              <tr><td>Sat–Sun</td><td>By request</td></tr>
+            </tbody>
+          </table>
+
+          <h3 style="margin-top:12px">Quick tips for briefs</h3>
+          <ol class="steps">
+            <li>Keep the brief short and specific.</li>
+            <li>Provide assets plus a brand voice one-liner.</li>
+            <li>State desired deliverables and timelines.</li>
+          </ol>
+        </section>
+      </aside>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Bridie Maugham Dibora — Built with semantic HTML5 for accessibility and clarity.</p>
+    </footer>
+  </main>
+</body>
+</html>
